@@ -2,6 +2,8 @@
 namespace src\Repositories;
 
 
+use Cassandra\Value;
+
 Class Repository{
     protected $table;
     protected $dBConnection;
@@ -14,43 +16,48 @@ Class Repository{
     /*
      *  Array $values array associativo com os campos e os valores para serem inseridos no banco de dados;
      * */
-    public function insert(array $values){
-        $sql = "INSERT INTO ". $this->table ."(";
+
+    public function insert(array $values)
+    {
+        try
+        {
+        $sql = "INSERT INTO " . $this->table . " ( ";
 
         // Coloca o nome das colunas no insert
-        $primeiro = true;
-        foreach ($values as $key => $value){
-            if($primeiro){
-                $sql = $sql. $key;
-                $primeiro = false;
-            }
-            else
-            {
-               $sql = $sql.",".$key;
+        $first = true;
+        foreach ($values as $key => $value) {
+            if ($first) {
+                $sql = $sql . $key;
+                $first = false;
+            } else {
+                $sql = $sql . ", " . $key;
             }
         }
 
-        $sql = $sql.") VALUES (";
+        $sql = $sql . " ) VALUES ( ";
         // Coloca os paramentros de bindings no insert;
-        $primeiro = true;
-        foreach ($values as $key => $value){
-            if($primeiro){
-                $sql = $sql. ":".$key;
-                $primeiro = false;
-            }
-            else
-            {
-                $sql = $sql.", :".$key;
+        $first = true;
+        foreach ($values as $key => $value) {
+            if ($first) {
+                $sql = $sql . ":" . $key;
+                $first = false;
+            } else {
+                $sql = $sql . ", :" . $key;
             }
         }
-
+            $sql = $sql." );";
         // faz o binding com os valores do array
         $stmt = $this->dBConnection->prepare($sql);
-        foreach ($values as  $key => $value){
-            $stmt->bindValue(":".$key, $value);
+
+        foreach ($values as $key => $value) {
+            $stmt->bindvalue(":".$key, $value);
         }
 
         $stmt->execute();
+    }
+    catch(\PDOExeption $err){
+        echo "Não foi possivel inserir no banco de dados " . $err->getMessage();
+    }
 
     }
 
@@ -62,7 +69,18 @@ Class Repository{
 
     }
 
-    protected function selectAll(){
+    public function selectAll(){
+        $sql = " SELECT * FROM ". $this->table;
+        $consulta = $this->dBConnection->query($sql);
+
+        try
+        {
+           return  $consulta->fetchAll(\PDO::FETCH_ASSOC);
+        }
+        catch (\PDOException $err)
+        {
+            echo " Não foi possivel selecionar os dados" . $err->getMessage();
+        }
 
     }
 }

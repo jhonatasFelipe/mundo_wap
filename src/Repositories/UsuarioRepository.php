@@ -6,8 +6,8 @@ namespace src\Repositories;
 
 class UsuarioRepository extends Repository
 {
-    public function  __construct(string $table, \PDO $dBConnection)
+    public function  __construct(\PDO $dBConnection)
     {
-        parent::__construct($table, $dBConnection);
+        parent::__construct("usuario", $dBConnection);
     }
 }
