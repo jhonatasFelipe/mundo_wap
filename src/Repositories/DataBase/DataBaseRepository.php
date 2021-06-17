@@ -60,16 +60,24 @@ Class DataBaseRepository{
 
     }
 
-    protected function delete(){
-
+    public function delete(string $feild,string $value){
+        try {
+            $sql = "DELETE FROM " . $this->table . " WHERE " . $feild . "=" . $value;
+            $stmt = $this->dBConnection->query($sql);
+            $stmt->execute();
+            return true;
+        }catch (\PDOException $err){
+            return false;
+        }
     }
 
     protected  function update(){
 
     }
 
+
     public function selectAll(){
-        $sql = " SELECT * FROM ". $this->table;
+        $sql = "SELECT * FROM ". $this->table;
         $consulta = $this->dBConnection->query($sql);
 
         try
@@ -84,8 +92,8 @@ Class DataBaseRepository{
     }
 
     public function find(string $field,string $operator,string $value){
-        $sql = " SELECT * FROM ". $this->table.
-            " WHERE ".$field." ".$operator." ".$value;
+        $sql = "SELECT * FROM ". $this->table.
+            " WHERE ".$field.$operator."'".$value."'";
         $consulta = $this->dBConnection->query($sql);
         try
         {

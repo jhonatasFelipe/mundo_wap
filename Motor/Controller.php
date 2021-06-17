@@ -10,7 +10,10 @@ use Twig\Environment;
 class Controller
 
 {
+ protected $parans;
 
-
+ public function setParans($parans){
+     $this->parans = $parans;
+}
 
 }

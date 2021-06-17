@@ -10,11 +10,24 @@ class Router
 {
     public $routes = [];
     public $actualUri ;
+    public $params;
 
     public function __construct()
     {
-       $this->actualUri = $_SERVER['REQUEST_URI'];
+        $rotaseparada =  explode("/", $_SERVER['REQUEST_URI']);
+        if(count($rotaseparada) > 2){
+            $this->params = array_pop($rotaseparada);
+            foreach ($rotaseparada as $seguimento){
+                if(!$seguimento =="") {
+                    $this->actualUri = $this->actualUri . "/" . $seguimento;
+                }
+            }
+        }
+        else{
+            $this->actualUri = "/".$rotaseparada[1];
+        }
     }
+
 
 
     public function add(Route $route){
@@ -44,13 +57,20 @@ class Router
             $route = array_shift($routematch);
             $controller  = $container->get($route->controller) ;
             $action = $route->action;
+            $controller->setParans($this->params);
             $controller->$action();
 
         }
     }
 
-    public function navegate(string $path){
-        $this->actualUri = $path;
-        $this->dispatch();
+    public static function navegate(string $route, string $parans = ""){
+
+        if(empty($parans)){
+            $stringredirection = "Location: http://".$_SERVER['HTTP_HOST'].$route;
+        }
+        else{
+            $stringredirection = "Location: http://".$_SERVER['HTTP_HOST'].$route."/".$parans;
+        }
+        header($stringredirection);
     }
 }

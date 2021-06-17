@@ -6,6 +6,7 @@ namespace src\Controllers;
 
 
 use motor\Controller;
+use motor\Router;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use src\FileRead\Filter\ProductsFilter;
 use src\Repositories\DataBase\ProdutoDataBaseRepository;
@@ -23,10 +24,15 @@ class ProdutoController extends  Controller
     }
 
     public function index(){
+        session_start();
+        if(!isset($_SESSION['login'])){
+            Router::navegate("/");
+        }
+
         $container = ContainerSingleton::getInstance();
         $repo = $container->get(ProdutoDataBaseRepository::class);
         $data = $repo->selectAll();
-        echo $this->view->render("produtos/lista.twig",["produtos" => $data]);
+        echo $this->view->render("produtos/lista.twig",["produtos" => $data, "param"=>$this->parans]);
     }
 
     public function readFile(){
@@ -57,7 +63,10 @@ class ProdutoController extends  Controller
         if($validator->isValid()){
            $database =  $container->get(ProdutoDataBaseRepository::class);
            $fordatabase = $xls->rows();
+
+           // aqui remove a linha de cabeçalho
            array_shift($fordatabase);
+           //itera sobre todas as linhas da tabela e e presiste no banco
            foreach ( $fordatabase as $row){
                $fabricacao = $row[4] == "" ? null : $row[4];
               $database->insert([
@@ -68,6 +77,16 @@ class ProdutoController extends  Controller
                   'fabricacao'=>$fabricacao
               ]);
            }
+        }
+       Router::navegate("/produtos");
+    }
+
+    public function delete(){
+        $container = ContainerSingleton::getInstance();
+        $produtoRepo = $container->get(ProdutoDataBaseRepository::class);
+
+        if($produtoRepo->delete("EAN",$this->parans)){
+            Router::navegate("/produtos");
         }
     }
 }

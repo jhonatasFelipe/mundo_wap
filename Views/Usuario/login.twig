@@ -1,17 +1,21 @@
 {{ include ("head.twig") }}
+{{nome }}
 <div class="container mt-5">
-<form class=" container col-sm-4">
+<form class=" container col-sm-4" action="/" method="post">
     <div class="mb-3 form-floating">
-        <input type="email" class="form-control " id="exampleFormControlInput1" placeholder="name@example.com">
+        <input name="email" type="email" class="form-control " id="exampleFormControlInput1" placeholder="name@example.com">
         <label for="exampleFormControlInput1" >E-mail</label>
     </div>
     <div class="mb-3 form-floating ">
-        <input type="password" class="form-control" id="inputPassword" placeholder="senha">
+        <input type="password" class="form-control" id="inputPassword" placeholder="senha" name="senha">
         <label for="inputPassword">Senha</label>
+    </div>
+    <div>
+        {{ erro }}
     </div>
     <div class=" mb-3 justify-content-md-end col">
         <button class="btn btn-primary" type="submit">Entrar</button>
-        <button class="btn btn-danger" type="reset">Entrar</button>
+        <button class="btn btn-danger" type="reset">Cancelar</button>
     </div>
 </form>
 </div>

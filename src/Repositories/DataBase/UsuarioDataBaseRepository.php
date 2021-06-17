@@ -11,4 +11,6 @@ class UsuarioDataBaseRepository extends DataBaseRepository
     {
         parent::__construct("usuario", $dBConnection);
     }
+
+
 }

@@ -2,6 +2,7 @@
 
 use src\ServiceProviders\ProdutoDataBaseRepositoryServiceProvider;
 use src\ServiceProviders\ProdutoServiceProvider;
+use src\ServiceProviders\UsuarioDataBaseRepositoryServiceProvider;
 use src\ServiceProviders\UsuarioServiceProvider;
 use src\ServiceProviders\ValidatorServiceProvider;
 
@@ -20,6 +21,7 @@ return $config =  [
           ProdutoServiceProvider::class,
           UsuarioServiceProvider::class,
           ValidatorServiceProvider::class,
-          ProdutoDataBaseRepositoryServiceProvider::class
+          ProdutoDataBaseRepositoryServiceProvider::class,
+          UsuarioDataBaseRepositoryServiceProvider::class
     ]
 ];

@@ -1,6 +1,6 @@
 
 {{ include ("head.twig") }}
-
+{{ param }}
 <div class="container mt-5 mb-5">
     {{ include("produtos/selecao_de_arquivo.twig")}}
 <table class="table table-striped ">
@@ -17,16 +17,20 @@
     <tbody>
     {% for produto in produtos %}
         <tr>
-            <td> <button type="submit" class="btn btn-danger btn-sm">Remover</button></td>
+            <td> <a href="/deletaproduto/{{produto["EAN"]}}"><button type="submit" class="btn btn-danger btn-sm">Remover</button></a></td>
             <td>{{ produto["EAN"]}} </td>
             <td> {{ produto["nome"]}} </td>
             <td> {{ produto["preco"]}} </td>
             <td> {{ produto["estoque"]}} </td>
-            <td> {{ produto["fabricacao"]}} </td>
+            {% if produto["fabricacao"]== "" %}
+            <td></td>
+            {% else %}
+            <td> {{ produto["fabricacao"] | date("d/m/Y")}}</td>
+            {% endif %}
         </tr>
     {% else %}
         <tr>
-            <td>
+            <td colspan="6">
                 <h4> Não há registros de produtos </h4>
             </td>
         </tr>
