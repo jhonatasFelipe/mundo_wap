@@ -19,10 +19,11 @@ class UsuarioDataBaseRepositoryServiceProvider extends AbstractServiceProvider
         $this->getLeagueContainer()->add(UsuarioDataBaseRepository::class)
             ->addArgument(\PDO::class);
 
+        $config  = $GLOBALS['config'];
         $this->getLeagueContainer()->add(\PDO::class)
-            ->addArgument('mysql:host=localhost;dbname=mundo_wap')
-            ->addArgument('root')
-            ->addArgument('j2desenvolvimento')
+            ->addArgument('mysql:host='.$config['data_base_connection']['host'].';dbname='.$config['data_base_connection']['db_name'])
+            ->addArgument($config['data_base_connection']['user'])
+            ->addArgument($config['data_base_connection']['password'])
             ->addArgument([\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
     }
 }

@@ -7,9 +7,9 @@ use src\ServiceProviders\UsuarioServiceProvider;
 use src\ServiceProviders\ValidatorServiceProvider;
 
 
-return $config =  [
+ return  [
     "data_base_connection"=>[
-        "host" => " localhost",
+        "host" => "localhost",
         "user" => "root",
         "password" => "j2desenvolvimento",
         "db_name" => "mundo_wap"
