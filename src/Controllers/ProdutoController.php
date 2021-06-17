@@ -7,8 +7,9 @@ namespace src\Controllers;
 
 use motor\Controller;
 use motor\Router;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use src\FileRead\Filter\ProductsFilter;
+use src\exceptions\DataBase\DuplicateValueException;
+use src\exceptions\FileReader\FieldIvalidExeption;
+use src\exceptions\FileReader\HeadFileIvalidException;
 use src\Repositories\DataBase\ProdutoDataBaseRepository;
 use src\Singleton\ContainerSingleton;
 use src\FileRead\Validators\FileValidator;
@@ -17,7 +18,6 @@ use Twig\Environment;
 class ProdutoController extends  Controller
 {
     protected $view;
-
 
     public function __construct(Environment $view){
         $this->view = $view;
@@ -37,6 +37,7 @@ class ProdutoController extends  Controller
 
     public function readFile(){
 
+        try{
         /*
          * Pega o arquivo que foi feito o upload e move para pasta Arquivos_excel, depois
          * pega o caminho do arquivo e joa na variavel file.
@@ -54,13 +55,14 @@ class ProdutoController extends  Controller
         $validator = $container->get(FileValidator::class);
         $validator->setDefaultHead(["EAN", "NOME PRODUTO","PREÇO","ESTOQUE","DATA FABRICAÇÃO"]);
         $validator->setFile($xls->rows());
+        $validator->validate();
 
         /*
          * Depois de validado os dados da planilha eles são persistidos no banco de dados
          * é retirada a primeira linha da matriz porque ela é o cabeçalho.
          *
          * */
-        if($validator->isValid()){
+
            $database =  $container->get(ProdutoDataBaseRepository::class);
            $fordatabase = $xls->rows();
 
@@ -77,8 +79,18 @@ class ProdutoController extends  Controller
                   'fabricacao'=>$fabricacao
               ]);
            }
-        }
        Router::navegate("/produtos");
+        }catch (FieldIvalidExeption $err){
+            $erro = $err->getMessage();
+        }catch (HeadFileIvalidException $err){
+            $erro = $err->getMessage();
+        }catch ( DuplicateValueException $err){
+            $erro = $err->getMessage();
+        }catch (\PDOException $err){
+            $erro = $err->getMessage();
+        }
+
+        echo $this->view->render("Erros/file_erros.twig", ['erro' =>$erro]);
     }
 
     public function delete(){
