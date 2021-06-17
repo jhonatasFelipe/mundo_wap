@@ -41,9 +41,9 @@ class ProdutoController extends  Controller
          * Pega o arquivo que foi feito o upload e move para pasta Arquivos_excel, depois
          * pega o caminho do arquivo e joa na variavel file.
          * */
-        move_uploaded_file($_FILES['arquivo']['tmp_name'],"./arquivos_excel/".$_FILES['arquivo']['name']);
+        move_uploaded_file($_FILES['inputfile']['tmp_name'],"./arquivos_excel/".$_FILES['inputfile']['name']);
         $container = ContainerSingleton::getInstance();
-        $file = __DIR__ . "/../../public/arquivos_excel/".$_FILES['arquivo']['name'];
+        $file =dirname(dirname(__DIR__)). "/public/arquivos_excel/".$_FILES['inputfile']['name'];
         /*
          * $xls é a variavel que recebe os dados da planilha
          * logo depois é ultilizado o validador que recebe os parametros do cabeçalho , e valida o

@@ -1,14 +1,16 @@
 {{ include ("head.twig") }}
 {{nome }}
 <div class="container mt-5">
-<form class=" container col-sm-4" action="/" method="post">
+<form id="formlogin"class="container col-sm-4" action="/" method="post">
+    <p>E-mail</p>
     <div class="mb-3 form-floating">
-        <input name="email" type="email" class="form-control " id="exampleFormControlInput1" placeholder="name@example.com">
-        <label for="exampleFormControlInput1" >E-mail</label>
+        <input name="email" type="email" class="form-control " id="email" placeholder="name@example.com">
+        <label for="email" ></label>
     </div>
+    <p>Senha</p>
     <div class="mb-3 form-floating ">
-        <input type="password" class="form-control" id="inputPassword" placeholder="senha" name="senha">
-        <label for="inputPassword">Senha</label>
+        <input type="password" class="form-control" id="senha" placeholder="senha" name="senha">
+        <label for="senha"></label>
     </div>
     <div>
         {{ erro }}
@@ -19,4 +21,5 @@
     </div>
 </form>
 </div>
+<script src="./js/login.js" type="text/javascript" language="JavaScript"></script>
 {{ include("rodape.twig") }}
