@@ -6,7 +6,7 @@ create table produto (
     nome varchar(50) not null,
     preco decimal(6,2) not null,
     estoque int(11) not null,
-    fabricacao date,
+    fabricacao date nullable ,
     primary key (EAN)
 );
 

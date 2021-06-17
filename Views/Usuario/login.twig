@@ -1,0 +1,18 @@
+{{ include ("head.twig") }}
+<div class="container mt-5">
+<form class=" container col-sm-4">
+    <div class="mb-3 form-floating">
+        <input type="email" class="form-control " id="exampleFormControlInput1" placeholder="name@example.com">
+        <label for="exampleFormControlInput1" >E-mail</label>
+    </div>
+    <div class="mb-3 form-floating ">
+        <input type="password" class="form-control" id="inputPassword" placeholder="senha">
+        <label for="inputPassword">Senha</label>
+    </div>
+    <div class=" mb-3 justify-content-md-end col">
+        <button class="btn btn-primary" type="submit">Entrar</button>
+        <button class="btn btn-danger" type="reset">Entrar</button>
+    </div>
+</form>
+</div>
+{{ include("rodape.twig") }}

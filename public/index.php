@@ -1,32 +1,15 @@
 <?php
- require_once "../vendor/autoload.php";
+require_once "../vendor/autoload.php";
+use motor\Bootstrap;
+use motor\Router;
 
-use src\Repositories\ProdutoRepository;
+$config = require_once __DIR__ . "/../config.php";
+$routes = require_once __DIR__ . "/../Routes.php";
 
-use src\Models\BD;
-use src\Repositories\UsuarioRepository;
+$router = new Router();
+$router->addRoutesAsArray($routes);
+$motor = new Bootstrap($config, $router);
+$motor->run();
 
-$connetion = BD::conectBD();
 
-$repoProduct = new ProdutoRepository($connetion);
-$repoUser = new UsuarioRepository($connetion);
-
-$product = [
-    "EAN" => "123454",
-    "nome" => "laranja",
-    "preco" => 20.5,
-    "estoque" => 50,
-    "fabricacao" => '2021-07-01'
-];
-
-try{
-    $product = $repoProduct->selectAll();
-    $user = $repoUser->selectAll();
-
-    echo json_encode($product);
-    echo json_encode($user);
-}
-catch (\PDOException $e){
-    echo $e->getMessage();
-}
 

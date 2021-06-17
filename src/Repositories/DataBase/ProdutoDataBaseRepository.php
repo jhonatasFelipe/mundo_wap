@@ -1,10 +1,10 @@
 <?php
 
 
-namespace src\Repositories;
+namespace src\Repositories\DataBase;
 
 
-class ProdutoRepository extends Repository
+class ProdutoDataBaseRepository extends DataBaseRepository
 {
     public function __construct(\PDO $dBConnection)
     {

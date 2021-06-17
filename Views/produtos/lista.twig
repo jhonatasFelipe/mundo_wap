@@ -1,0 +1,37 @@
+
+{{ include ("head.twig") }}
+
+<div class="container mt-5 mb-5">
+    {{ include("produtos/selecao_de_arquivo.twig")}}
+<table class="table table-striped ">
+    <thead>
+        <tr class="table-dark ">
+            <th> AÇÃO </th>
+            <th> EAN </th>
+            <th> NOME PRODUTO </th>
+            <th> PREÇO </th>
+            <th> ESTOQUE </th>
+            <th> DATA FABRICAÇÃO </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for produto in produtos %}
+        <tr>
+            <td> <button type="submit" class="btn btn-danger btn-sm">Remover</button></td>
+            <td>{{ produto["EAN"]}} </td>
+            <td> {{ produto["nome"]}} </td>
+            <td> {{ produto["preco"]}} </td>
+            <td> {{ produto["estoque"]}} </td>
+            <td> {{ produto["fabricacao"]}} </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td>
+                <h4> Não há registros de produtos </h4>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{{ include("rodape.twig") }}

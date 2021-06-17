@@ -1,10 +1,9 @@
 <?php
-namespace src\Repositories;
+namespace src\Repositories\DataBase;
 
 
-use Cassandra\Value;
 
-Class Repository{
+Class DataBaseRepository{
     protected $table;
     protected $dBConnection;
 
@@ -82,5 +81,19 @@ Class Repository{
             echo " Não foi possivel selecionar os dados" . $err->getMessage();
         }
 
+    }
+
+    public function find(string $field,string $operator,string $value){
+        $sql = " SELECT * FROM ". $this->table.
+            " WHERE ".$field." ".$operator." ".$value;
+        $consulta = $this->dBConnection->query($sql);
+        try
+        {
+            return  $consulta->fetchAll(\PDO::FETCH_ASSOC);
+        }
+        catch (\PDOException $err)
+        {
+            echo " Não foi possivel selecionar os dados" . $err->getMessage();
+        }
     }
 }

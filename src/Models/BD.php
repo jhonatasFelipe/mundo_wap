@@ -2,10 +2,7 @@
 
 
 namespace src\Models;
- define('HOST', "localhost");
- define('USER', 'root');
- define('PASS', 'j2desenvolvimento');
- define('DB_NAME', 'mundo_wap');
+
 
  Abstract class  BD
 {

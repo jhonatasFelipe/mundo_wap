@@ -10,11 +10,15 @@
     ],
     "autoload": {
         "psr-4": {
-            "src\\": "src"
+            "src\\": "src",
+            "motor\\": "Motor"
         }
     },
     "minimum-stability": "dev",
     "require": {
-        "symfony/routing": "5.4.x-dev"
+        "twig/twig": "^3.0",
+        "league/container": "3.3.3",
+        "phpoffice/phpspreadsheet": "1.18.0",
+        "shuchkin/simplexlsx": "0.8.24"
     }
 }

@@ -1,8 +1,10 @@
 <?php
+
+
 namespace src\Models;
 
-class Produto
-{
 
+class Usuario
+{
 
 }
