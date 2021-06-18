@@ -16,3 +16,5 @@ create table usuario (
     senha varchar(100) not null,
     primary key (id)
 );
+
+INSERT INTO usuario (email,senha) values("teste@mundowap.com","senha");
